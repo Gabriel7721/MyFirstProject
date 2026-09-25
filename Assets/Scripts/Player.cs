@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int level = 2;
+    public int level = 3;
     void Start()
     {
         Debug.Log("Player started");
