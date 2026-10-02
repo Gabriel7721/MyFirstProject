@@ -10,9 +10,4 @@ public class Player : MonoBehaviour
         Debug.Log("Player level: " + level);
         Debug.Log("Player gold: " + gold);
     }
-
-    void Update()
-    {
-
-    }
 }

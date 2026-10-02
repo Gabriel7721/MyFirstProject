@@ -11,9 +11,4 @@ public class Enemy : MonoBehaviour
         Debug.Log("Damage:" + damage);
         Debug.Log("Enemy HP:" + healthPoint);
     }
-
-    void Update()
-    {
-
-    }
 }
