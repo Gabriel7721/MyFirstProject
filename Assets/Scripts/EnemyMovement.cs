@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour
     private float moveSpeed = 2f;
     private Rigidbody2D rb;
     private Transform playerTransform;
+    private float knockbackEndTime;
 
     private void Awake()
     {
@@ -27,10 +28,20 @@ public class EnemyMovement : MonoBehaviour
 
         }
 
+        if (Time.time < knockbackEndTime)
+        {
+            return;
+        }
+
         Vector2 direction = ((Vector2)playerTransform.position - rb.position).normalized;
 
         Vector2 targetPosition = rb.position + direction * moveSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(targetPosition);
+    }
+
+    public void ApplyKnockbackDelay(float duration)
+    {
+        knockbackEndTime = Time.time + duration;
     }
 }
