@@ -4,8 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyAI))]
 public class EnemyMovement : MonoBehaviour
 {
-
     [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float patrolSpeed = 1.5f;
     private EnemyAI enemyAI;
     private float knockbackEndTime;
     private Rigidbody2D rb;
@@ -18,9 +18,33 @@ public class EnemyMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (Time.time < knockbackEndTime) return;
-        if (!enemyAI.IsChasing) return;
-        Transform player = enemyAI.Player;
-        if (player == null) return;
+
+        Transform player;
+        float speed;
+        bool isFoundPlayer;
+
+        if (enemyAI.IsChasing)
+        {
+            player = enemyAI.Player;
+            speed = moveSpeed;
+        }
+        else if (enemyAI.IsPatrolling)
+        {
+            player = enemyAI.CurrentPatrolPoint;
+            speed = patrolSpeed;
+
+            if (player == null) return;
+            isFoundPlayer = Vector2
+                .Distance(rb.position, player.position)
+                    <= enemyAI.ReachDistance;
+
+            if (isFoundPlayer)
+            {
+                enemyAI.AdvancePatrolPoint();
+                return;
+            }
+        }
+        else { return; }
 
         Vector2 direction =
             ((Vector2)player.position - rb.position)
@@ -28,7 +52,7 @@ public class EnemyMovement : MonoBehaviour
 
         Vector2 targetPosition =
             rb.position +
-                moveSpeed * Time.fixedDeltaTime * direction;
+                speed * Time.fixedDeltaTime * direction;
 
         rb.MovePosition(targetPosition);
     }

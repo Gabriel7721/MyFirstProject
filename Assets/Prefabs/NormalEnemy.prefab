@@ -67,7 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f98e6b032c9ce419014f61fd76cc27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  moveSpeed: 4
+  moveSpeed: 2
+  patrolSpeed: 1.5
 --- !u!50 &1082769214705399215
 Rigidbody2D:
   serializedVersion: 5
@@ -160,6 +161,9 @@ MonoBehaviour:
   player: {fileID: 0}
   chaseRange: 6
   attackRange: 2.5
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  reachDistance: 0.1
 --- !u!1 &7006631339557133457
 GameObject:
   m_ObjectHideFlags: 0

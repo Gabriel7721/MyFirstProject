@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject enemyPrefab;
-    [SerializeField]
-    private float respawnDelay = 5f;
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private float respawnDelay = 5f;
+    [SerializeField] private Transform pointA;
+    [SerializeField] private Transform pointB;
 
     private void Start()
     {
@@ -22,6 +22,11 @@ public class EnemySpawner : MonoBehaviour
         if (enemy.TryGetComponent<EnemyHealth>(out var enemyHealth))
         {
             enemyHealth.SetSpawner(this);
+        }
+
+        if (enemy.TryGetComponent<EnemyAI>(out var enemyAI))
+        {
+            enemyAI.SetPatrolPoints(pointA, pointB);
         }
     }
     private IEnumerator SpawnEnemyWithDelay()
