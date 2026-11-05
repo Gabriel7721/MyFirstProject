@@ -145,14 +145,40 @@ public class PlayerInventory : MonoBehaviour
         RefreshUI();
         return true;
     }
+
     public void UseHealthPotion(PlayerHealth playerHealth)
     {
-        const int healthPotionId = 1;
-        bool removed = RemoveItem(healthPotionId, 1);
-        if (!removed) return;
+        if (playerHealth == null) return;
 
-        playerHealth.Heal(25);
+        const int lesserPotionId = 1;
+        const int greaterPotionId = 2;
+
+        Item lesserPotion = FindItem(lesserPotionId);
+        Item greaterPotion = FindItem(greaterPotionId);
+
+        if (lesserPotion != null && lesserPotion.Quantity > 0)
+        {
+            if (RemoveItem(lesserPotionId, 1))
+            {
+                playerHealth.Heal(25);
+                Debug.Log("Used Lesser Health Potion: +25 HP");
+            }
+        }
+        else if (greaterPotion != null && greaterPotion.Quantity > 0)
+        {
+            if (RemoveItem(greaterPotionId, 1))
+            {
+                playerHealth.Heal(50);
+                Debug.Log("Used Greater Health Potion: +50 HP");
+            }
+        }
+        else
+        {
+            Debug.Log("No Health Potions in Inventory!");
+        }
     }
+
+
     private void RefreshUI()
     {
         if (inventoryUI != null)
