@@ -10,24 +10,19 @@ public class LeaderboardUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (networkManager == null ||
-            rowsContainer == null ||
-            rowPrefab == null)
+        if (networkManager == null || rowsContainer == null || rowPrefab == null)
         {
             Debug.LogError("Leaderboard UI references are missing.");
             return;
         }
-
         networkManager.LeaderboardLoaded += DisplayLeaderboard;
         networkManager.LeaderboardFailed += DisplayError;
-
         RefreshLeaderboard();
     }
 
     private void OnDisable()
     {
         if (networkManager == null) return;
-
         networkManager.LeaderboardLoaded -= DisplayLeaderboard;
         networkManager.LeaderboardFailed -= DisplayError;
     }
@@ -35,12 +30,7 @@ public class LeaderboardUI : MonoBehaviour
     public void RefreshLeaderboard()
     {
         if (networkManager == null) return;
-
-        if (statusText != null)
-        {
-            statusText.text = "Loading leaderboard...";
-        }
-
+        if (statusText != null) statusText.text = "Loading leaderboard...";
         networkManager.LoadLeaderboard();
     }
 
@@ -58,19 +48,13 @@ public class LeaderboardUI : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            LeaderboardRow row = Instantiate(
-                rowPrefab,
-                rowsContainer
-            );
-
+            LeaderboardRow row = Instantiate(rowPrefab, rowsContainer);
             row.SetData(i + 1, response.players[i]);
         }
 
         if (statusText != null)
         {
-            statusText.text = count == 0
-                ? "No scores available."
-                : "";
+            statusText.text = count == 0 ? "No scores available." : "";
         }
     }
 
@@ -85,11 +69,7 @@ public class LeaderboardUI : MonoBehaviour
 
     private void DisplayError(string error)
     {
-        if (statusText != null)
-        {
-            statusText.text = "Unable to load leaderboard.";
-        }
-
+        if (statusText != null) statusText.text = "Unable to load leaderboard.";
         Debug.LogWarning(error);
     }
 }
