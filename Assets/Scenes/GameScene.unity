@@ -1242,8 +1242,8 @@ MonoBehaviour:
   target: {fileID: 1844029513}
   smoothSpeed: 8
   useBounds: 1
-  minBounds: {x: -30, y: -30}
-  maxBounds: {x: 30, y: 30}
+  minBounds: {x: -60, y: -60}
+  maxBounds: {x: 60, y: 60}
 --- !u!1 &360679430
 GameObject:
   m_ObjectHideFlags: 0
